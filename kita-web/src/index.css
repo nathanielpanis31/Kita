@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+/* Universal box model fix */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin/padding */
+* {
+  margin: 0;
+  padding: 0;font-family: DM Sans, sans-serif;
+}
+
+/* Improve font rendering */
+body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  background-color: #0a0a0f;
+}
+
+/* Responsive images by default */
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Inherit fonts in form elements */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* Avoid text overflow */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  color: white;
+}
+
+a, ul, li{
+    text-decoration: none;
+    color: white;
+    list-style: none;
+}
+
+.sideBar{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    background-color: #111118;
+    width: 17.2vw;
+    gap: 28px;
+}
+
+.sideBarHeadings{
+    display: flex;
+    padding-left: 20px;
+    font-size: large;
+}
+
+.btnNavigation{
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    margin-left: 9px;
+    margin-right: 0px;
+}
+
+.btnNavigation a {
+    display: block;
+    padding-left: 25px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #9896b0;
+
+}
+
+.btnNavigation a:hover {
+    background-color: #1a1a24;
+    transition: 0.1s ease-in-out;
+    border-radius: 12px
+}
+
+.btnNavigation a:focus {
+    background: rgba(124, 107, 255, 0.15);
+    border:  1px solid rgba(124, 107, 255, 0.2);
+    border-radius: 12px;
+    color: #a89cff;
+}
