@@ -1,0 +1,1 @@
+main screens or page of the web, it used .jsx cause the separete js is for express back end here is for UI only html+JS = .jsx

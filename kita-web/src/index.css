@@ -1,91 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
-/* Universal box model fix */
+/* ── CSS Variables ───────────────────────── */
+:root {
+  --bg:        #0a0a0f;
+  --bg2:       #111118;
+  --bg3:       #1a1a24;
+  --bg4:       #22222f;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+  --text:      #f0eff8;
+  --text2:     #9896b0;
+  --text3:     #5a5870;
+  --accent:    #7c6bff;
+  --accent2:   #a89cff;
+  --green:     #2de08a;
+  --green2:    #1a8f58;
+  --red:       #ff5f7e;
+  --red2:      #9f2040;
+  --amber:     #ffb347;
+  --teal:      #2dd4bf;
+  --pink:      #f472b6;
+  --radius:    16px;
+  --radius-sm: 10px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* ── Box model reset ─────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
-}
-
-/* Remove default margin/padding */
-* {
   margin: 0;
-  padding: 0;font-family: DM Sans, sans-serif;
+  padding: 0;
 }
 
-/* Improve font rendering */
+/* ── Base body ───────────────────────────── */
 body {
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 14px;
   line-height: 1.5;
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  background-color: #0a0a0f;
 }
 
-/* Responsive images by default */
+/* ── Typography ──────────────────────────── */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  color: var(--text);  /* uses variable not hardcoded white */
+}
+
+/* ── Links & lists ───────────────────────── */
+a {
+  text-decoration: none;
+  color: inherit;  /* inherits from parent instead of hardcoding white */
+}
+
+ul, li {
+  list-style: none;
+}
+
+/* ── Media ───────────────────────────────── */
 img, video, svg {
   display: block;
   max-width: 100%;
 }
 
-/* Inherit fonts in form elements */
+/* ── Form elements ───────────────────────── */
 input, button, textarea, select {
   font: inherit;
 }
 
-/* Avoid text overflow */
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-  color: white;
+/* ── Scrollbar ───────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 2px; }
+
+/* ── Animation ───────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-a, ul, li{
-    text-decoration: none;
-    color: white;
-    list-style: none;
-}
-
-.sideBar{
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    background-color: #111118;
-    width: 17.2vw;
-    gap: 28px;
-}
-
-.sideBarHeadings{
-    display: flex;
-    padding-left: 20px;
-    font-size: large;
-}
-
-.btnNavigation{
-    display: flex;
-    flex-direction: column;
-    font-size: 13px;
-    margin-left: 9px;
-    margin-right: 0px;
-}
-
-.btnNavigation a {
-    display: block;
-    padding-left: 25px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    color: #9896b0;
-
-}
-
-.btnNavigation a:hover {
-    background-color: #1a1a24;
-    transition: 0.1s ease-in-out;
-    border-radius: 12px
-}
-
-.btnNavigation a:focus {
-    background: rgba(124, 107, 255, 0.15);
-    border:  1px solid rgba(124, 107, 255, 0.2);
-    border-radius: 12px;
-    color: #a89cff;
+.dashboard {
+  margin-left: 200px;
+  color: var(--text);
 }
