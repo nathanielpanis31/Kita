@@ -1,19 +1,20 @@
 import "../template/components-css/side-bar.css"
+import { Link } from 'react-router-dom'
 
-function SideBar() {
+function SideBar({children}) {
 
     return (
             
-        <div class="sideBar">
+        <div className="sideBar">
             <div class="sideBarHeadings">
                 <h2>Title</h2>
             </div>
             
-                <ul class="btnNavigation">
-                    <li><a href="../page/dashboard.jsx">Dashborad</a></li>
-                    <li><a href="../page/transaction.jsx">Transaction</a></li>
-                    <li><a href="../page/budget.jsx">Budget</a></li>
-                    <li><a href="../page/report.jsx">Reports</a></li>
+                <ul className="btnNavigation">
+                    <li><Link to="/dashboard">Dashboard</Link></li>
+                    <li><Link to="/transaction">Transaction</Link></li>
+                    <li><Link to="/budget">Budget</Link></li>
+                    <li><Link to="/reports">Reports</Link></li>
                 </ul>
         </div>
 
