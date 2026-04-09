@@ -67,7 +67,7 @@ img, video, svg {
 }
 
 /* ── Form elements ───────────────────────── */
-input, button, textarea, select {
+input, textarea, select {
   font: inherit;
 }
 

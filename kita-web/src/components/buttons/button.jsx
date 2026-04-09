@@ -1,4 +1,4 @@
-import "./Button.css"; // import the CSS for button styles
+import "./button.css"; // import the CSS for button styles
 
 function Button({ children, onClick, className, variant = "primary" }) {
   return (

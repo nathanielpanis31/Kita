@@ -1,11 +1,11 @@
-import Button from "../components/button.jsx";
+import Button from "../../components/buttons/button.jsx";
 
 function Dashboard() {
   return (
     <div className="dashboard">
       
       {/* Default primary button */}
-      <Button onClick={() => alert("Primary clicked!")}>
+      <Button onClick>
         Primary
       </Button>
 
@@ -18,7 +18,10 @@ function Dashboard() {
       <Button className="big-button" onClick={() => alert("Big clicked!")}>
         Big Primary
       </Button>
-
+      
+      <Button variant="secondary">
+        Primary
+      </Button>
     </div>
   );
 }

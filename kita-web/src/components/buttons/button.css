@@ -1,0 +1,24 @@
+.btn{
+    width: 150px;
+    height: 37px;
+    border-radius: 10px;
+    background-color: var(--accent);
+    color: white;
+    border: 0.5px solid var(--bg4);
+}
+
+.btn:hover{
+    transform: translateY(-0.7px);
+    box-shadow: 0 30px 30px rgba(0,0,0,0.25), 0 0 10px rgba(124,107,255,0.3);
+}
+
+.secondary{
+    background-color: var(--bg4);
+    color: var(--text);
+    border: 0.5px solid var(--text);
+}
+
+.secondary:hover{
+    border: 1px solid var(--accent);
+    transform: none;
+}
