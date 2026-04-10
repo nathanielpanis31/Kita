@@ -1,0 +1,26 @@
+.transaction-page{
+    margin: 30px 40px;
+    flex: 1;
+}
+
+.transaction-heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.transaction-body{
+    display: grid;
+    grid-template-columns: 3, 1fr;
+    grid-template-rows: repeat(2,minmax(200px, auto));
+    background-color: var(--bg2);
+    border-radius: 25px;
+}
+
+.history-header{
+    display: flex;
+    flex-direction: row;
+    padding: 15px 20px;
+    gap: 10px;
+}

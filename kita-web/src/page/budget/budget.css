@@ -1,0 +1,19 @@
+.budget-page{
+    margin: 30px 40px;
+    flex: 1;
+}
+
+.budget-heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.budget-body{
+    display: grid;
+    grid-template-columns: 3, 1fr;
+    grid-template-rows: repeat(2,minmax(200px, auto));
+    background-color: var(--bg2);
+    border-radius: 25px;
+}

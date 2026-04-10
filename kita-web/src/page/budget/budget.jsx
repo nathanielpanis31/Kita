@@ -1,21 +1,29 @@
-import Card from "../../components/cards/card.jsx"
-import Card2 from "../../components/cards/card2.jsx"
+import Button from "../../components/buttons/button.jsx";
+import "./budget.css";
 
-function Budget() {
-  return(
-    
-    <div>
-      <Card title="Total Balance">
-        <p className="amount">₱267,239.00</p>
-        <p className="caption">All time net</p>
-      </Card>
+  function Budget() {
+    return(
 
-      <Card2 title="transaction">
-        <p className="amount">₱267,239.00</p>
-        <p className="caption">All time net</p>
-      </Card2>    
+    <div className="budget-page">
+      
+      <div className="budget-heading">
+        <div className="left-heading">
+          <h1>Transactions</h1>
+          <p>Good Day!</p>
+        </div>
+
+        <div className="right-heading">
+          <Button className="primary"> + Add Transaction</Button>
+        </div>  
+      </div>
+
+        <div className="budget-body">
+          <div className="budget-history">
+          </div>
+        </div>
+
     </div>
-    
+
   )
 }
 export default Budget
