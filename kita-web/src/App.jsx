@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import SideBar from "./components/side-bar.jsx"
-import Dashboard from "./page/dashboard.jsx"
-import Transaction from "./page/transaction.jsx"
-import Budget from "./page/budget.jsx"
-import Reports from "./page/report.jsx"
+import SideBar from "./layouts/side-bar/side-bar.jsx"
+import Dashboard from "./page/dashboard/dashboard.jsx"
+import Transaction from "./page/transaction/transaction.jsx"
+import Budget from "./page/budget/budget.jsx"
+import Reports from "./page/report/report.jsx"
 
 function App() {
     return (

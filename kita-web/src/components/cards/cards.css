@@ -1,0 +1,47 @@
+/* CARD */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+  background-color: var(--bg3);
+  border-radius: 15px;
+  font-family: 'Syne', sans-serif;
+}
+
+.card h3 {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--text2);
+}
+.card-body {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.caption {
+  font-size: 14px;
+  color: var(--text2);
+}
+
+.balance-amount {color: var(--accent);}
+.income-amount {color: var(--green);}
+.expenses-amount {color: var(--red);}
+
+
+/* CARD2 */
+.card2 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+  background-color: var(--bg3);
+  border-radius: 15px;
+  font-family: 'Syne', sans-serif;
+}
+
+hr {
+  margin: 0;
+  border: none;
+  border-top: 1px solid #2a2a3d;
+}
