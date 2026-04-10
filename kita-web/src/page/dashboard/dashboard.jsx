@@ -13,6 +13,10 @@ const spendingData = [
 
 const COLORS = ['#7c6bff', '#2de08a', '#ff5f7e', '#ffb347', '#2dd4bf']
 
+  const now = new Date();
+  const options = { month: "long", year: "numeric" };
+  const formattedDate = now.toLocaleDateString("en-US", options);
+
 function Dashboard() {
   return (
 
@@ -39,12 +43,12 @@ function Dashboard() {
           <p className="caption">All time net</p>
         </Card>
 
-        <Card title="INCOME - APRIL 2026" variant="income">
+        <Card title={`INCOME - ${formattedDate}`} variant="income">
           <p className="income-amount">₱33,000.00</p>
           <p className="caption">2 Transaction</p>
         </Card>
 
-        <Card title="EXPENSES - APRIL 2026" variant="expenses">
+        <Card title={`EXPENSES - ${formattedDate}`} variant="expenses">
           <p className="expenses-amount">₱44,000.00</p>
           <p className="caption">2 Transaction</p>
         </Card>
