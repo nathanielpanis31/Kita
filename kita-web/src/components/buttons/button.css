@@ -41,3 +41,14 @@
     background-color: rgba(124, 107, 255, 0.15);
     color: white;
 }
+
+.view-all{
+    margin-top: 17px;
+    margin-right: 20px;
+    background-color: var(--bg3);
+    color: var(--text2);
+    border: 0.5px solid var(--text2);
+    width: 100px;
+    height: 30px;
+    border-radius: 40px;
+}

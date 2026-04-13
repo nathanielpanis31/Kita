@@ -54,7 +54,10 @@ function Dashboard() {
         </Card>
 
         <div className="transaction">
-          <h2>Recent Transactions</h2><hr />
+          <div className="recentTransaction-header">
+            <h2>Recent Transactions</h2>
+            <Button className="view-all">View all</Button>
+          </div><hr />
           <div className="transaction-inputs">
             <div className="label-amount">
               <div className="transact-label">
@@ -68,14 +71,16 @@ function Dashboard() {
 
         {/* SAMPLE CHART */}
         <div className="spending-category">
-          <h2>Spending Categories</h2><hr />
-          <PieChart width={400} height={300}>
+          <h2>Spending Categories</h2>
+          <hr />
+
+          <PieChart width={300} height={300}>
             <Pie
               data={spendingData}
-              cx={200}
-              cy={130}
-              innerRadius={80}
-              outerRadius={120}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={90}
               paddingAngle={3}
               dataKey="value"
             >
@@ -83,6 +88,7 @@ function Dashboard() {
                 <Cell key={index} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
+
             <Tooltip
               contentStyle={{
                 backgroundColor: '#1a1a24',
@@ -92,11 +98,15 @@ function Dashboard() {
               }}
               formatter={(value) => [`₱${value.toLocaleString()}`, '']}
             />
+
             <Legend
+              verticalAlign="bottom"
               iconType="circle"
               iconSize={8}
               formatter={(value) => (
-                <span style={{ color: '#9896b0', fontSize: '13px' }}>{value}</span>
+                <span style={{ color: '#9896b0', fontSize: '13px' }}>
+                  {value}
+                </span>
               )}
             />
           </PieChart>

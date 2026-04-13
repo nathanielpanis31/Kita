@@ -1,29 +1,41 @@
-import Button from "../../components/buttons/button.jsx";
+import "./report.css";
 
-function Dashboard() {
+function Report() {
   return (
-    <div className="dashboard">
-      
-      {/* Default primary button */}
-      <Button onClick>
-        Primary
-      </Button>
+    <div className="report">
 
-      {/* Secondary button */}
-      <Button variant="secondary" onClick={() => alert("Secondary clicked!")}>
-        Secondary
-      </Button>
+      <div className="report-heading">
 
-      {/* Big button with page-specific style */}
-      <Button className="big-button" onClick={() => alert("Big clicked!")}>
-        Big Primary
-      </Button>
-      
-      <Button variant="secondary">
-        Primary
-      </Button>
+        <div className="left-heading">
+          <h1>Report</h1>
+          <p>Good Day!</p>
+        </div>
+      </div>  
+
+        <div className="report-body">
+
+          <div className="income-expenses">
+            <div className="incomeExpenses-heading">
+              <h2>Income vs Expenses</h2><hr />
+            </div>
+            <div className="incomeExpenses">
+              <p>This is where the report content will be displayed.</p>
+            </div>
+          </div>
+
+          <div className="category-breakdown">
+              <div className="categoryBreakdown-headings">
+                <h2>Income vs Expenses</h2><hr />
+              </div>
+              <div className="categoryBreakdown">
+                <p>This is where the report content will be displayed.</p>
+              </div>
+          </div>
+
+        </div>
+  
     </div>
   );
 }
 
-export default Dashboard;
+export default Report;

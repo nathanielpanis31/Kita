@@ -49,6 +49,12 @@
     border-radius: 15px;;
 }
 
+.recentTransaction-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .transaction h2{   
     font-size: 18px;
     padding:18px 20px;
@@ -96,7 +102,12 @@ hr{
 
 .label { font-size: 14px;}
 .date{font-size: 10px; color: var(--text2);}
-.amount { color: red;}
+
+.amount { 
+    color: red; 
+    font-family: var(--font-head);
+    font-size: 15px;
+}
 
 /* SPENDING CATEGORY CARD */
 .spending-category{
