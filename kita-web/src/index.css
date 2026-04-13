@@ -89,3 +89,9 @@ input, textarea, select {
   min-height: 100vh;
   min-width: 100vw;
 }
+
+hr{
+    border: none;
+    border-top: 2px solid var(--bg4);
+    margin-bottom:0;
+}
