@@ -1,0 +1,29 @@
+REACT AND EXPRESS SETUPS AND INSTALL
+
+---REACT SETUP---
+1.download node on computer
+2.npm create vite@latest appName
+3.cd appName (change directory)
+4.npm install
+5.npm run dev (run the web)
+
+
+---REACT ADDITIONAL INSTALL---
+1.npm install react-router-dom (for navigating or goin in another file on web, replacement on a href from html to avoid page refresh and use react-router-dom for navigation.)
+
+
+---EXPRESS SETUP---
+1.mkdir express-foldername/kita-server(making new folder inside the workspace folder)
+2.cd express-foldername (change directory to new folder)
+3.npm init -y (Initializes a new Node.js project in your folder. It creates a package.json file which tracks your project info, scripts, and dependencies)
+4.npm install express mongoose dontenv cors(you can install this 4 separately)
+   -pm install express (install express frameform)
+   -pm install mongoose (the bridge between the code and the database mongoDB)
+   -pm install dotenv (It loads your .env file into your app so you can access secret values like passwords and API keys without hardcoding them in your code)
+   -pm install cors (Allows your React app (different port) to talk to your Express server)
+5.npm install --save-dev nodemon
+6. create the server.js and .env file manually
+
+
+---NOTES--- 
+You have to run npm run dev on both express and react directory use a 2 shell to run them.
