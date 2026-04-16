@@ -23,6 +23,7 @@ REACT AND EXPRESS SETUPS AND INSTALL
    -pm install cors (Allows your React app (different port) to talk to your Express server)
 5.npm install --save-dev nodemon
 6. create the server.js and .env file manually
+7. put the a starter code on the server.js, you can find it on code-note file its titles SERVER.JS
 
 
 ---NOTES--- 

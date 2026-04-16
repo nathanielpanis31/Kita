@@ -1,0 +1,144 @@
+/* LOGIN REGISTER HEADER CSS */
+.loginRegisterHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+    height: 70px;
+    background-color: var(--bg2);
+    padding: 14px 20px 0 20px;
+    border-bottom: 1px solid var(--bg4);
+}
+
+.signup {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 7px;
+}
+
+.signup-btn {
+    border: 1px solid var(--text2);
+    border-radius: 10px;
+    padding: 7px 15px;
+    font-weight: bold;
+}
+
+.signup-btn:hover {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+.signup-btn:active {
+    border: 1px solid var(--text2);
+    color: var(--text2);
+}
+
+/* LOGIN CARD CSS */
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 70px);
+}
+
+.login-card {
+    background-color: var(--bg2);
+    border: 1px solid var(--bg4);
+    height: 420px;
+    width: 400px;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.loginCardHeadings {
+    display: flex;
+    flex-direction: column;
+    gap:3px;
+}
+
+.loginCardHeadings h2 {color: white;}
+.loginCardHeadings h4 {color: var(--accent);}
+
+
+.inputs {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--text2);
+}
+
+.usernameInput, .passwordInput {
+    width: 100%;
+    height: 40px;
+    background-color: var(--border2);
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--text3);
+    color: var(--text);
+}
+
+.remember-forgot {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--text2);
+}
+
+.forgot-password{
+    color: var(--accent);
+}
+
+.forgot-password:hover {
+    color: var(--text2);
+}
+
+.rememberme input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: var(--accent);
+}
+
+.button {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.signin, .google {
+    width: 100%;
+    height: 30px;
+    background-color: var(--bg2);
+    border: 1px solid var(--text2);
+    border-radius: 10px;
+    color: var(--text);
+    font-weight: bold;
+}
+
+/* REGISTER CARD CSS */
+.login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 70px);
+}
+
+.login-card {
+    background-color: var(--bg2);
+    border: 1px solid var(--bg4);
+    height: 420px;
+    width: 400px;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+.loginCardHeadings {
+    display: flex;
+    flex-direction: column;
+    gap:3px;
+}
+
+.loginCardHeadings h2 {color: white;}
+.loginCardHeadings h4 {color: var(--accent);}
