@@ -19,3 +19,50 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+
+
+---.ENV (starter code)---
+MONGO_URI=
+PORT=
+JWT_SECRET=
+
+
+
+
+---GITIGNORE (code)----
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Build output (put the directory name of backend and frontend here)
+kita-web/dist
+kita-web/dist-ssr
+
+# Local env files
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

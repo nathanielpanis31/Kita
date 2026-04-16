@@ -1,5 +1,7 @@
 const express = require("express");
+const mongoose =require('mongoose')
 const cors = require("cors");
+const UserModel = require("./models/user")
 require("dotenv").config();
 
 const app = express();
@@ -8,13 +10,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// test route
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+mongoose.connect("mongodb://127.0.0.1:27017/user");
 
-const PORT = process.env.PORT || 5000;
+app.post('/register', (req, res) => {
+    const { fullName, userName, registerPassword } = req.body
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+    UserModel.create({ fullName, userName, password: registerPassword })
+    .then(user => res.json(user))
+    .catch(err => res.json(err))
+})
+
+app.listen(3001, () => {
+  console.log("server is running")
+})
+

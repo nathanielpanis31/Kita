@@ -8,8 +8,12 @@ REACT AND EXPRESS SETUPS AND INSTALL
 5.npm run dev (run the web)
 
 
+
+
 ---REACT ADDITIONAL INSTALL---
 1.npm install react-router-dom (for navigating or goin in another file on web, replacement on a href from html to avoid page refresh and use react-router-dom for navigation.)
+
+
 
 
 ---EXPRESS SETUP---
@@ -26,5 +30,9 @@ REACT AND EXPRESS SETUPS AND INSTALL
 7. put the a starter code on the server.js, you can find it on code-note file its titles SERVER.JS
 
 
+
+
 ---NOTES--- 
-You have to run npm run dev on both express and react directory use a 2 shell to run them.
+1. You have to run npm run dev on both express and react directory use a 2 shell to run them.
+2. if gonna clone or pull the project on another device, cd on each directory of back and front end then install(npm install) on both, then add .env file on the express directory.
+3. when starting new project always put gitignore on the root directory.

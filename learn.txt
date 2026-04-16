@@ -1,0 +1,9 @@
+learn this type of JS
+
+-Functions & Callbacks
+-Promises & Async/Await
+-Destructuring & Shorthand
+-Modules (require/exports)
+-Arrow Functions
+-Objects & Key-Value Pairs
+-Try/Catch Error Handling
