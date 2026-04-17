@@ -1,11 +1,15 @@
 import "./side-bar.css"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'  // ← remove Outlet, add useNavigate
 
 function SideBar() {
   const now = new Date();
-
   const options = { month: "long", year: "numeric" };
   const formattedDate = now.toLocaleDateString("en-US", options);
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    navigate('/login')
+  }
 
   return (
     <div className="sideBar">
@@ -26,6 +30,7 @@ function SideBar() {
           <p>{formattedDate}</p>
           <p>Current period</p>
         </div>
+        <button onClick={handleLogout} className="logout-btn">Logout</button>  {/* ← add this */}
       </div>
     </div>
   )

@@ -134,3 +134,21 @@ hr{
     font-size: 18px;
     padding:18px 20px;
 }
+
+.logout-btn {
+    width: calc(100% - 40px);
+    margin: 10px 20px 20px 20px;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid var(--bg4);
+    border-radius: 8px;
+    color: #9896b0;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.logout-btn:hover {
+    background-color: #1a1a24;
+    color: #ff5f7e;
+    transition: 0.1s ease-in-out;
+}

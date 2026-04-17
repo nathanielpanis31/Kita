@@ -1,7 +1,29 @@
 import "./login-register.css";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+
+        const [userName, setUserName] = useState()
+        const [registerPassword, setPassword] = useState()
+        const navigate = useNavigate()
+    
+        const handleSubmit = (e) => {
+            e.preventDefault()
+            axios.post('http://localhost:3001/login',{userName, registerPassword})
+            .then(result => {
+                console.log(result)
+                if(result.data === "Success") {
+                    navigate('/dashboard')
+                }
+
+            })
+            .catch(err => console.log(err))
+
+        }
+    
     return(
         <>
 
@@ -21,16 +43,16 @@ function Login() {
                         <h2>Sign in to kita</h2>
                     </div>
 
-                    <form action="">
-                    <div className="inputs">
-                        <div className="username">
-                            <label htmlFor="login-username">Username</label> <br />
-                            <input type="text" name="login-username" placeholder="Enter username"  className="usernameInput" required/>
+                    <form onSubmit={handleSubmit}>
+                    <div className="register-input">
+                        <div className="register-userName">
+                            <label htmlFor="userName">USER NAME</label><br />
+                            <input type="text" name="userName" placeholder="Enter username" onChange={(e) => setUserName(e.target.value)} required />
                         </div>
 
-                        <div className="password">
-                            <label htmlFor="login-password">Password</label><br />
-                            <input type="password" name="login-password" placeholder="Enter password" className="passwordInput" required/>
+                        <div className="register-password">
+                            <label htmlFor="registerPassword">PASSWORD</label><br />
+                            <input type="password" name="registerPassword" placeholder="Enter password" onChange={(e) => setPassword(e.target.value)} required/>
                         </div>
                     </div>
 
