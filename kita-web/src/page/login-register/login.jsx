@@ -12,7 +12,7 @@ function Login() {
     
         const handleSubmit = (e) => {
             e.preventDefault()
-            axios.post('http://localhost:3001/login',{userName, registerPassword})
+            axios.post('http://localhost:3001/api/login',{userName, registerPassword})
             .then(result => {
                 console.log(result)
                 if(result.data === "Success") {
@@ -73,7 +73,7 @@ function Login() {
                         <button className="google">Signin with google</button>
                     </div>
                     </form>
-                    
+                
                 </div>
             </div>
             

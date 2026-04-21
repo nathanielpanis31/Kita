@@ -1,7 +1,10 @@
 import Button from "../../components/buttons/button.jsx";
 import "./transaction.css";
+import { useState } from "react";
 
 function Transaction() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return(
 
     <div className="transaction-page">
@@ -13,7 +16,7 @@ function Transaction() {
         </div>
 
         <div className="right-heading">
-          <Button className="primary"> + Add Transaction</Button>
+          <Button className="primary" onClick={() => setIsModalOpen(true)}> + Add Transaction</Button>
         </div>  
       </div>
 
@@ -38,6 +41,37 @@ function Transaction() {
         </div>
           </div>
         </div>
+
+        {isModalOpen && (
+          <div className="modal-overlay">
+            <div className="modalBox">
+              <h2 className="modalHeadings">Add Transaction</h2>
+
+              <div className="modalButtons">
+                <Button className="expenses">Expense</Button>
+                <Button className="incomeTransaction">Income</Button>
+              </div>
+
+              <div className="addTransactionInput">
+                <div className="addTransaction-description">
+                  <label htmlFor="">DESCRIPTION</label>
+                  <input type="text" placeholder="e.g. Lunch at Jollibee" />
+                </div>
+
+                <div className="addTransaction-amount">
+                  <label htmlFor="">AMOUNT (₱)</label>
+                  <input type="number"  placeholder="0.00"/>
+                </div>
+
+                <div className="addTransaction-category">
+                  <label htmlFor="">CATEGORY</label>
+                  <input type="text" placeholder="Select category"/>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        )}
 
     </div>
 

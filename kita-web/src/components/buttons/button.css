@@ -52,3 +52,25 @@
     height: 30px;
     border-radius: 40px;
 }
+
+.expenses {
+    background-color: var(--bg4);
+    height: 40px;
+    width: 200px;
+    border: 1px var(--bg4);
+}
+
+.expenses:focus {
+    background-color: rgba(180, 23, 23, 0.26);
+}
+
+.incomeTransaction {
+    background-color: var(--bg4);
+    height: 40px;
+    width: 200px;
+    border: none;
+}
+
+.incomeTransaction:focus {
+    background-color: var(--green2);
+}
