@@ -32,6 +32,13 @@ REACT AND EXPRESS SETUPS AND INSTALL
 
 
 
+---MONNGODB SETUP---
+1. download mongoDB, mongoDB atlas, mongoDB shell
+2. download mongoDB extension on visual studio, to access mongoDB shell inside VS
+
+
+
+
 ---NOTES--- 
 1. You have to run npm run dev on both express and react directory use a 2 shell to run them.
 2. if gonna clone or pull the project on another device, cd on each directory of back and front end then install(npm install) on both, then add .env file on the express directory.

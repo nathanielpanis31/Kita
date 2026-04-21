@@ -1,0 +1,32 @@
+---MONGODB PARTS---
+1.Document- this is the basic unit of database, its like the row from DATAVERSE
+2.Collection- this is like the folder the compile all the file, its similar to the Column from the DATAVERSE
+3.Database- this is the highest container that hold the collection and documents. its similar to the table from DATAVERSE
+
+
+
+---START---
+1. type "mongosh"
+2. type "show dbs" to show list of databases
+3. type "use databaseName" to use that database
+4. also type "use databaseName" then create collection to create a new database.
+
+
+
+
+---CREATE COLLECTION---
+1. go to that database, type "use databaseName"
+2. type "db.createCollection("databaseName")"
+
+
+
+---INSERT DOCUMENT---
+1. go to that database, type "use databaseName"
+2. type "db.collectionName.insertOne({documentName: documentValue})".
+
+
+
+
+
+---DIRECTLY CREATE NEW COLLECTION AND INSTER DOCUMENT---
+1. db.newCollectionName.insertOne({newDocumentName: documentValue}).
