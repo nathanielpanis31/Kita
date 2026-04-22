@@ -30,22 +30,43 @@ function TransactionModal({ onClose, onTransactionAdded }) {
                 <form onSubmit={handleSubmit}>
                 <div className="modal-inputs">
 
-                    <div>
-                        <label>LABEL</label><br />
-                        <input type="text" placeholder="e.g. Jollibee" onChange={(e) => setLabel(e.target.value)} required />
+                    {/* TYPE BUTTONS */}
+                    <div className="type-buttons">
+                        <button
+                            type="button"
+                            className={`type-btn expense-btn ${type === 'expense' ? 'active-expense' : ''}`}
+                            onClick={() => setType('expense')}
+                        >
+                            ↓ Expense
+                        </button>
+                        <button
+                            type="button"
+                            className={`type-btn income-btn ${type === 'income' ? 'active-income' : ''}`}
+                            onClick={() => setType('income')}
+                        >
+                            ↑ Income
+                        </button>
                     </div>
 
                     <div>
-                        <label>AMOUNT</label><br />
-                        <input type="number" placeholder="e.g. 500" onChange={(e) => setAmount(e.target.value)} required />
+                        <label>DESCRIPTION</label><br />
+                        <input
+                            type="text"
+                            placeholder="e.g. Lunch at Jollibee"
+                            onChange={(e) => setLabel(e.target.value)}
+                            required
+                        />
                     </div>
 
                     <div>
-                        <label>TYPE</label><br />
-                        <select onChange={(e) => setType(e.target.value)}>
-                            <option value="expense">Expense</option>
-                            <option value="income">Income</option>
-                        </select>
+                        <label>AMOUNT (₱)</label><br />
+                        <input
+                            type="number"
+                            placeholder="0.00"
+                            step="0.01"
+                            onChange={(e) => setAmount(e.target.value)}
+                            required
+                        />
                     </div>
 
                     <div>
@@ -55,14 +76,18 @@ function TransactionModal({ onClose, onTransactionAdded }) {
 
                     <div>
                         <label>DATE</label><br />
-                        <input type="date" onChange={(e) => setDate(e.target.value)} required />
+                        <input
+                            type="date"
+                            onChange={(e) => setDate(e.target.value)}
+                            required
+                        />
                     </div>
 
                 </div>
 
                 <div className="modal-buttons">
                     <button type="button" className="modal-cancel" onClick={onClose}>Cancel</button>
-                    <button type="submit" className="modal-submit">Add</button>
+                    <button type="submit" className="modal-submit">Save Transaction</button>
                 </div>
                 </form>
 
