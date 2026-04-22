@@ -14,4 +14,12 @@ const getTransactions = (req, res) => {
     .catch(err => res.json(err))
 }
 
-module.exports = { addTransaction, getTransactions }
+const deleteTransaction = (req, res) => {
+    const { id } = req.params
+
+    TransactionModel.findByIdAndDelete(id)
+    .then(result => res.json(result))
+    .catch(err => res.json(err))
+}
+
+module.exports = { addTransaction, getTransactions, deleteTransaction }

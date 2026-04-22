@@ -1,80 +1,91 @@
-import Button from "../../components/buttons/button.jsx";
-import "./transaction.css";
-import { useState } from "react";
+import { useState, useEffect } from "react"
+import axios from "axios"
+import Button from "../../components/buttons/button.jsx"
+import TransactionModal from "../../components/modal/TransactionModal.jsx"
+import "./transaction.css"
 
 function Transaction() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showModal, setShowModal] = useState(false)
+    const [transactions, setTransactions] = useState([])
+    const [filter, setFilter] = useState('all')
 
-  return(
+    const fetchTransactions = () => {
+        axios.get('http://localhost:3001/api/get')
+        .then(result => {
+            setTransactions(result.data)
+        })
+        .catch(err => console.log(err))
+    }
 
-    <div className="transaction-page">
-      
-      <div className="transaction-heading">
-        <div className="left-heading">
-          <h1>Transactions</h1>
-          <p>Good Day!</p>
-        </div>
+    useEffect(() => {
+        fetchTransactions()
+    }, [])
 
-        <div className="right-heading">
-          <Button className="primary" onClick={() => setIsModalOpen(true)}> + Add Transaction</Button>
-        </div>  
-      </div>
+    const filteredTransactions = transactions.filter(transaction => {
+        if (filter === 'all') return true
+        return transaction.type === filter
+    })
 
-        <div className="transaction-body">
-          <div className="transaction-history">
-            <div className="history-header">
-            <Button className="all"> All</Button>
-            <Button className="all" id="income"> Income</Button>
-            <Button className="all" id="expense"> Expense</Button>
-            </div><hr />
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:3001/api/delete/${id}`)
+        .then(() => {
+            fetchTransactions()
+        })
+        .catch(err => console.log(err))
+    }
 
-        <div className="transaction">
-          <div className="transaction-inputs">
-            <div className="label-amount">
-              <div className="transact-label">
-                <p className="label">jollibee</p>
-                <p className="date">April 2026</p>
-              </div>
-              <p className="amount">₱500.00</p>
+    return (
+        <div className="transaction-page">
+
+            {showModal && (
+                <TransactionModal
+                    onClose={() => setShowModal(false)}
+                    onTransactionAdded={fetchTransactions}
+                />
+            )}
+
+            <div className="transaction-heading">
+                <div className="left-heading">
+                    <h1>Transactions</h1>
+                    <p>Good Day!</p>
+                </div>
+                <div className="right-heading">
+                    <Button className="primary" onClick={() => setShowModal(true)}>
+                        + Add Transaction
+                    </Button>
+                </div>
             </div>
-          </div>
-        </div>
-          </div>
-        </div>
 
-        {isModalOpen && (
-          <div className="modal-overlay">
-            <div className="modalBox">
-              <h2 className="modalHeadings">Add Transaction</h2>
+            <div className="transaction-body">
+                <div className="transaction-history">
+                    <div className="history-header">
+                        <Button className="all" onClick={() => setFilter('all')}>All</Button>
+                        <Button className="all" onClick={() => setFilter('income')}>Income</Button>
+                        <Button className="all" onClick={() => setFilter('expense')}>Expense</Button>
+                    </div><hr />
 
-              <div className="modalButtons">
-                <Button className="expenses">Expense</Button>
-                <Button className="incomeTransaction">Income</Button>
-              </div>
-
-              <div className="addTransactionInput">
-                <div className="addTransaction-description">
-                  <label htmlFor="">DESCRIPTION</label>
-                  <input type="text" placeholder="e.g. Lunch at Jollibee" />
+            {filteredTransactions.map(transaction => (
+                <div className="transaction-inputs" key={transaction._id}>
+                    <div className="label-amount">
+                        <div className="transact-label">
+                            <p className="label">{transaction.label}</p>
+                            <p className="date">{transaction.category} • {new Date(transaction.date).toLocaleDateString()}</p>
+                        </div>
+                        <div className="amount-delete">
+                            <p className="amount" style={{ color: transaction.type === 'income' ? 'var(--green)' : 'var(--red)' }}>
+                                {transaction.type === 'income' ? '+' : '-'}₱{transaction.amount}
+                            </p>
+                            <button className="delete-btn" onClick={() => handleDelete(transaction._id)}>✕</button>
+                        </div>
+                    </div>
                 </div>
+            ))}
 
-                <div className="addTransaction-amount">
-                  <label htmlFor="">AMOUNT (₱)</label>
-                  <input type="number"  placeholder="0.00"/>
                 </div>
-
-                <div className="addTransaction-category">
-                  <label htmlFor="">CATEGORY</label>
-                  <input type="text" placeholder="Select category"/>
-                </div>
-
-              </div>
             </div>
-          </div>
-        )}
 
-    </div>
-
-  )
+        </div>
+    )
 }
+
 export default Transaction
