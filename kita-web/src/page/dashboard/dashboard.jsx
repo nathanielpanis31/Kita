@@ -7,7 +7,13 @@ import Card from "../../components/cards/card.jsx";
 import TransactionModal from "../../components/modal/TransactionModal.jsx";
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
 
-const COLORS = ['#7c6bff', '#2de08a', '#ff5f7e', '#ffb347', '#2dd4bf']
+// Generate dynamic colors based on index to ensure we never run out
+const getDynamicColor = (index) => {
+    // Using HSL to get vibrant, well-distributed colors
+    // We rotate the hue by 137.5 degrees (golden angle) for good distribution
+    const hue = (index * 137.5) % 360;
+    return `hsl(${hue}, 70%, 65%)`;
+};
 
 const now = new Date();
 const options = { month: "long", year: "numeric" };
@@ -33,9 +39,9 @@ function Dashboard() {
     // calculate total balance
     const totalBalance = transactions.reduce((total, transaction) => {
         if (transaction.type === 'income') {
-            return total + Number(transaction.amount)  // add Number()
+            return total + Number(transaction.amount)
         } else {
-            return total - Number(transaction.amount)  // add Number()
+            return total - Number(transaction.amount)
         }
     }, 0)
 
@@ -51,16 +57,16 @@ function Dashboard() {
 
     const totalIncome = thisMonthTransactions
         .filter(t => t.type === 'income')
-        .reduce((total, t) => total + Number(t.amount), 0)  // add Number()
+        .reduce((total, t) => total + Number(t.amount), 0)
 
     const totalExpenses = thisMonthTransactions
         .filter(t => t.type === 'expense')
-        .reduce((total, t) => total + Number(t.amount), 0)  // add Number()
+        .reduce((total, t) => total + Number(t.amount), 0)
 
     // get 5 most recent transactions
     const recentTransactions = [...transactions]
         .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 5)
+        .slice(0, 4)
 
     // build pie chart data from categories
     const categoryData = transactions
@@ -102,7 +108,7 @@ function Dashboard() {
             {/* Dashboard Content */}
             <div className="dashboard-body">
 
-                <Card title="Total Balance">
+                <Card title="TOTAL BALANCE">
                     <p className="balance-amount">₱{totalBalance.toLocaleString()}</p>
                     <p className="caption">All time net</p>
                 </Card>
@@ -162,7 +168,7 @@ function Dashboard() {
                                 dataKey="value"
                             >
                                 {categoryData.map((entry, index) => (
-                                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                                    <Cell key={index} fill={getDynamicColor(index)} />
                                 ))}
                             </Pie>
                             <Tooltip
