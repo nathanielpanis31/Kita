@@ -1,0 +1,94 @@
+.budget-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.budget-modal {
+    background-color: var(--bg2);
+    border: 1px solid var(--bg4);
+    border-radius: 20px;
+    padding: 30px;
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.budget-modal h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.budget-modal-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--text2);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.budget-modal-inputs input,
+.budget-modal-inputs select {
+    width: 100%;
+    height: 45px;
+    background-color: var(--bg3);
+    padding-left: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--bg4);
+    color: var(--text);
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.budget-modal-inputs input:focus,
+.budget-modal-inputs select:focus {
+    outline: none;
+    border: 1px solid var(--accent);
+}
+
+.budget-modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.budget-modal-submit {
+    flex: 1;
+    height: 45px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.budget-modal-submit:hover {
+    opacity: 0.9;
+}
+
+.budget-modal-cancel {
+    flex: 1;
+    height: 45px;
+    background-color: var(--bg3);
+    color: var(--text2);
+    border: 1px solid var(--bg4);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.budget-modal-cancel:hover {
+    border: 1px solid var(--text2);
+}

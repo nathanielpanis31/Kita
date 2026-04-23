@@ -123,14 +123,14 @@ hr{
 }
 
 /* BUDGET STATUS CARD */
-.budget-status{
+.spending-insights{
     grid-column: 1/4;
     grid-row: 4/6;
     background-color: var(--bg2);
     border-radius: 15px;;
 }
 
-.budget-status h2{   
+.spending-insights h2{   
     font-size: 18px;
     padding:18px 20px;
 }

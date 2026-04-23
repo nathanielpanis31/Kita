@@ -1,5 +1,6 @@
 import "./dashboard.css";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../../components/buttons/button.jsx";
 import Card from "../../components/cards/card.jsx";
@@ -13,6 +14,7 @@ const options = { month: "long", year: "numeric" };
 const formattedDate = now.toLocaleDateString("en-US", options);
 
 function Dashboard() {
+    const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
     const [transactions, setTransactions] = useState([])
 
@@ -31,9 +33,9 @@ function Dashboard() {
     // calculate total balance
     const totalBalance = transactions.reduce((total, transaction) => {
         if (transaction.type === 'income') {
-            return total + transaction.amount
+            return total + Number(transaction.amount)  // add Number()
         } else {
-            return total - transaction.amount
+            return total - Number(transaction.amount)  // add Number()
         }
     }, 0)
 
@@ -49,11 +51,11 @@ function Dashboard() {
 
     const totalIncome = thisMonthTransactions
         .filter(t => t.type === 'income')
-        .reduce((total, t) => total + t.amount, 0)
+        .reduce((total, t) => total + Number(t.amount), 0)  // add Number()
 
     const totalExpenses = thisMonthTransactions
         .filter(t => t.type === 'expense')
-        .reduce((total, t) => total + t.amount, 0)
+        .reduce((total, t) => total + Number(t.amount), 0)  // add Number()
 
     // get 5 most recent transactions
     const recentTransactions = [...transactions]
@@ -119,7 +121,7 @@ function Dashboard() {
                 <div className="transaction">
                     <div className="recentTransaction-header">
                         <h2>Recent Transactions</h2>
-                        <Button className="view-all">View all</Button>
+                        <Button className="view-all" onClick={() => navigate('/transaction')}>View all</Button>
                     </div><hr />
 
                     {recentTransactions.length === 0 ? (
@@ -186,8 +188,8 @@ function Dashboard() {
                     )}
                 </div>
 
-                <div className="budget-status">
-                    <h2>Budget Status</h2><hr />
+                <div className="spending-insights">
+                    <h2>Spending Insights</h2><hr />
                 </div>
 
             </div>
