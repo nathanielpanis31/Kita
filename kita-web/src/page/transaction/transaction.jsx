@@ -4,6 +4,7 @@ import Button from "../../components/buttons/button.jsx"
 import TransactionModal from "../../components/modal/TransactionModal.jsx"
 import "./transaction.css"
 
+
 function Transaction() {
     const [showModal, setShowModal] = useState(false)
     const [transactions, setTransactions] = useState([])
