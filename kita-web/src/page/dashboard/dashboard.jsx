@@ -23,6 +23,7 @@ function Dashboard() {
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
     const [transactions, setTransactions] = useState([])
+    const userFullName = localStorage.getItem('userFullName') || 'User'
 
     const fetchTransactions = () => {
         axios.get('http://localhost:3001/api/get')
@@ -95,7 +96,7 @@ function Dashboard() {
             <div className="dashboard-heading">
                 <div className="left-heading">
                     <h1>Dashboard</h1>
-                    <p>Good Day!</p>
+                    <p>Good Day, {userFullName}!</p>
                 </div>
                 <div className="right-heading">
                     <Button className="secondary">This month</Button>

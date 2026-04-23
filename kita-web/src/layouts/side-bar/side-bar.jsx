@@ -14,7 +14,7 @@ function SideBar() {
   return (
     <div className="sideBar">
       <div className="sideBarHeadings">  
-        <h2>Title</h2>
+        <h1>kita.</h1>
       </div>
 
       <ul className="btnNavigation">

@@ -16,7 +16,14 @@
 .sideBarHeadings{
     display: flex;
     padding-left: 20px;
-    font-size: large;
+}
+
+.sideBarHeadings h1 {
+    font-family: var(--font-head);
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text);
 }
 
 .btnNavigation{

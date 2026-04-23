@@ -1,6 +1,7 @@
 import "./report.css";
 
 function Report() {
+  const userFullName = localStorage.getItem('userFullName') || 'User'
   return (
     <div className="report">
 
@@ -8,7 +9,7 @@ function Report() {
 
         <div className="left-heading">
           <h1>Report</h1>
-          <p>Good Day!</p>
+          <p>Good Day, {userFullName}!</p>
         </div>
       </div>  
 
@@ -25,7 +26,7 @@ function Report() {
 
           <div className="category-breakdown">
               <div className="categoryBreakdown-headings">
-                <h2>Income vs Expenses</h2><hr />
+                <h2>Category Breakdown</h2><hr />
               </div>
               <div className="categoryBreakdown">
                 <p>This is where the report content will be displayed.</p>

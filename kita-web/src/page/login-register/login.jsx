@@ -13,7 +13,8 @@ function Login() {
         e.preventDefault()
         axios.post('http://localhost:3001/api/login', { userName, registerPassword })
             .then(result => {
-                if (result.data === "Success") {
+                if (result.data.message === "Success") {
+                    localStorage.setItem('userFullName', result.data.user.fullName)
                     navigate('/dashboard')
                 }
             })
