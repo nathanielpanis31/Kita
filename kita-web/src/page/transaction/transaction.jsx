@@ -52,7 +52,7 @@ function Transaction() {
             <div className="transaction-heading">
                 <div className="left-heading">
                     <h1>Transactions</h1>
-                    <p>Good Day, {userFullName}!</p>
+                    <p>Good Day {userFullName}!</p>
                 </div>
                 <div className="right-heading">
                     <Button className="primary" onClick={() => setShowModal(true)}>

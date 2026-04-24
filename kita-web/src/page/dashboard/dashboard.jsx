@@ -103,7 +103,7 @@ function Dashboard() {
             <div className="dashboard-heading">
                 <div className="left-heading">
                     <h1>Dashboard</h1>
-                    <p>Good Day, {userFullName}!</p>
+                    <p>Good Day {userFullName}!</p>
                 </div>
 
             <div className="right-heading">

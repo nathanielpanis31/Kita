@@ -78,7 +78,7 @@ function Budget() {
             <div className="budget-heading">
                 <div className="left-heading">
                     <h1>Budget</h1>
-                    <p>Good Day, {userFullName}!</p>
+                    <p>Good Day {userFullName}!</p>
                 </div>
                 <div className="right-heading">
                     <Button className="primary" onClick={() => setShowModal(true)}>

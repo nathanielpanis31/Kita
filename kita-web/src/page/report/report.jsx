@@ -12,6 +12,7 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 
 function Report() {
     const [transactions, setTransactions] = useState([])
+    const userFullName = localStorage.getItem('userFullName') || 'User'
 
     useEffect(() => {
         axios.get('http://localhost:3001/api/get')
@@ -57,7 +58,7 @@ function Report() {
             <div className="report-heading">
                 <div className="left-heading">
                     <h1>Reports</h1>
-                    <p>Good Day!</p>
+                    <p>Good Day {userFullName}!</p>
                 </div>
             </div>
 
