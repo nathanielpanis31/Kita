@@ -7,3 +7,4 @@ learn this type of JS
 -Arrow Functions
 -Objects & Key-Value Pairs
 -Try/Catch Error Handling
+-learn JWT for security
