@@ -90,6 +90,11 @@ input, textarea, select {
   min-width: 100vw;
 }
 
+.contentArea {
+  flex: 1;
+  margin-left: 200px; /* match sidebar width */
+}
+
 hr{
     border: none;
     border-top: 2px solid var(--bg4);

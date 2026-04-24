@@ -22,13 +22,15 @@ function App() {
                 <Route path="/*" element={
                     <main className="mainContent">
                         <SideBar />
-                        <Routes>
-                            <Route path="/" element={<Dashboard />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
-                            <Route path="/transaction" element={<Transaction />} />
-                            <Route path="/budget" element={<Budget />} />
-                            <Route path="/reports" element={<Reports />} />
-                        </Routes>
+                        <div className="contentArea">
+                            <Routes>
+                                <Route path="/" element={<Dashboard />} />
+                                <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/transaction" element={<Transaction />} />
+                                <Route path="/budget" element={<Budget />} />
+                                <Route path="/reports" element={<Reports />} />
+                            </Routes>
+                        </div>
                     </main>
                 } />
             </Routes>
