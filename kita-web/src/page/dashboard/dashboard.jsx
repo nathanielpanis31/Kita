@@ -16,14 +16,25 @@ const getDynamicColor = (index) => {
 };
 
 const now = new Date();
-const options = { month: "long", year: "numeric" };
-const formattedDate = now.toLocaleDateString("en-US", options);
 
 function Dashboard() {
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
     const [transactions, setTransactions] = useState([])
     const userFullName = localStorage.getItem('userFullName') || 'User'
+    const [selectedMonth, setSelectedMonth] = useState(now.getMonth())
+    const [selectedYear, setSelectedYear] = useState(now.getFullYear())
+
+    // generate last 12 months as options
+    const monthOptions = []
+    for (let i = 0; i < 12; i++) {
+        const date = new Date(now.getFullYear(), now.getMonth() - i, 1)
+        monthOptions.push({
+            label: date.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+            month: date.getMonth(),
+            year: date.getFullYear()
+        })
+    }
 
     const fetchTransactions = () => {
         axios.get('http://localhost:3001/api/get')
@@ -37,24 +48,20 @@ function Dashboard() {
         fetchTransactions()
     }, [])
 
-    // calculate total balance
-    const totalBalance = transactions.reduce((total, transaction) => {
+    const thisMonthTransactions = transactions.filter(transaction => {
+        const transactionDate = new Date(transaction.date)
+        return transactionDate.getMonth() === selectedMonth &&
+            transactionDate.getFullYear() === selectedYear
+    })
+
+    // total balance - change to use selected month only
+    const totalBalance = thisMonthTransactions.reduce((total, transaction) => {
         if (transaction.type === 'income') {
             return total + Number(transaction.amount)
         } else {
             return total - Number(transaction.amount)
         }
     }, 0)
-
-    // calculate this month income and expenses
-    const currentMonth = now.getMonth()
-    const currentYear = now.getFullYear()
-
-    const thisMonthTransactions = transactions.filter(transaction => {
-        const transactionDate = new Date(transaction.date)
-        return transactionDate.getMonth() === currentMonth &&
-               transactionDate.getFullYear() === currentYear
-    })
 
     const totalIncome = thisMonthTransactions
         .filter(t => t.type === 'income')
@@ -65,19 +72,19 @@ function Dashboard() {
         .reduce((total, t) => total + Number(t.amount), 0)
 
     // get 5 most recent transactions
-    const recentTransactions = [...transactions]
+    const recentTransactions = [...thisMonthTransactions]
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .slice(0, 4)
 
     // build pie chart data from categories
-    const categoryData = transactions
+    const categoryData = thisMonthTransactions
         .filter(t => t.type === 'expense')
         .reduce((acc, t) => {
             const existing = acc.find(item => item.name === t.category)
             if (existing) {
-                existing.value += t.amount
+                existing.value += Number(t.amount)
             } else {
-                acc.push({ name: t.category, value: t.amount })
+                acc.push({ name: t.category, value: Number(t.amount) })
             }
             return acc
         }, [])
@@ -98,12 +105,27 @@ function Dashboard() {
                     <h1>Dashboard</h1>
                     <p>Good Day, {userFullName}!</p>
                 </div>
-                <div className="right-heading">
-                    <Button className="secondary">This month</Button>
-                    <Button className="primary" onClick={() => setShowModal(true)}>
-                        + Add Transaction
-                    </Button>
-                </div>
+
+            <div className="right-heading">
+                <select
+                    className="month-select"
+                    onChange={(e) => {
+                        const selected = monthOptions[e.target.value]
+                        setSelectedMonth(selected.month)
+                        setSelectedYear(selected.year)
+                    }}
+                    defaultValue={0}
+                >
+                    {monthOptions.map((option, index) => (
+                        <option key={index} value={index}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+                <Button className="primary" onClick={() => setShowModal(true)}>
+                    + Add Transaction
+                </Button>
+            </div>
             </div>
 
             {/* Dashboard Content */}
@@ -114,12 +136,12 @@ function Dashboard() {
                     <p className="caption">All time net</p>
                 </Card>
 
-                <Card title={`INCOME - ${formattedDate}`}>
+                <Card title={`INCOME - ${monthOptions[0] ? new Date(selectedYear, selectedMonth).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : ''}`}>
                     <p className="income-amount">₱{totalIncome.toLocaleString()}</p>
                     <p className="caption">{thisMonthTransactions.filter(t => t.type === 'income').length} Transactions</p>
                 </Card>
 
-                <Card title={`EXPENSES - ${formattedDate}`}>
+                <Card title={`EXPENSES - ${monthOptions[0] ? new Date(selectedYear, selectedMonth).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : ''}`}>
                     <p className="expenses-amount">₱{totalExpenses.toLocaleString()}</p>
                     <p className="caption">{thisMonthTransactions.filter(t => t.type === 'expense').length} Transactions</p>
                 </Card>
@@ -195,9 +217,118 @@ function Dashboard() {
                     )}
                 </div>
 
-                <div className="spending-insights">
-                    <h2>Spending Insights</h2><hr />
+<div className="spending-insights">
+    <h2>Spending Insights</h2><hr />
+
+    <div className="insights-body">
+
+        {/* STATS */}
+        <div className="insights-stats">
+            <div className="insight-stat-card">
+                <p className="insight-stat-label">BIGGEST EXPENSE</p>
+                <p className="insight-stat-value">
+                    {thisMonthTransactions.filter(t => t.type === 'expense').length === 0
+                        ? 'No expenses yet'
+                        : `₱${Math.max(...thisMonthTransactions
+                            .filter(t => t.type === 'expense')
+                            .map(t => Number(t.amount))).toLocaleString()}`
+                    }
+                </p>
+            </div>
+
+            <div className="insight-stat-card">
+                <p className="insight-stat-label">TOP CATEGORY</p>
+                <p className="insight-stat-value">
+                    {categoryData.length === 0
+                        ? 'No expenses yet'
+                        : categoryData.reduce((max, cat) =>
+                            cat.value > max.value ? cat : max
+                          ).name
+                    }
+                </p>
+            </div>
+
+            <div className="insight-stat-card">
+                <p className="insight-stat-label">SAVINGS RATE</p>
+                <p className="insight-stat-value" style={{
+                    color: totalIncome === 0 ? 'var(--text2)' :
+                           ((totalIncome - totalExpenses) / totalIncome * 100) >= 0
+                           ? 'var(--green)' : 'var(--red)'
+                }}>
+                    {totalIncome === 0
+                        ? 'No income yet'
+                        : `${Math.round((totalIncome - totalExpenses) / totalIncome * 100)}%`
+                    }
+                </p>
+            </div>
+
+            <div className="insight-stat-card">
+                <p className="insight-stat-label">AVG DAILY SPEND</p>
+                <p className="insight-stat-value">
+                    {thisMonthTransactions.filter(t => t.type === 'expense').length === 0
+                        ? 'No expenses yet'
+                        : `₱${Math.round(totalExpenses / new Date().getDate()).toLocaleString()}`
+                    }
+                </p>
+            </div>
+        </div>
+
+        {/* TIPS AND WARNINGS */}
+        <div className="insights-tips">
+            {/* savings tip */}
+            {totalIncome > 0 && (
+                <div className={`insight-tip ${(totalIncome - totalExpenses) / totalIncome * 100 >= 20 ? 'tip-good' : 'tip-warning'}`}>
+                    <span className="tip-icon">
+                        {(totalIncome - totalExpenses) / totalIncome * 100 >= 20 ? '✓' : '!'}
+                    </span>
+                    <p>
+                        {(totalIncome - totalExpenses) / totalIncome * 100 >= 20
+                            ? `Great job! You're saving ${Math.round((totalIncome - totalExpenses) / totalIncome * 100)}% of your income this month.`
+                            : `You're saving less than 20% of your income. Try to reduce expenses.`
+                        }
+                    </p>
                 </div>
+            )}
+
+            {/* top category warning */}
+            {categoryData.length > 0 && (
+                <div className="insight-tip tip-info">
+                    <span className="tip-icon">↑</span>
+                    <p>Your biggest spending category is <strong>{categoryData.reduce((max, cat) => cat.value > max.value ? cat : max).name}</strong> at ₱{categoryData.reduce((max, cat) => cat.value > max.value ? cat : max).value.toLocaleString()}.</p>
+                </div>
+            )}
+
+            {/* biggest single expense */}
+            {thisMonthTransactions.filter(t => t.type === 'expense').length > 0 && (
+                <div className="insight-tip tip-info">
+                    <span className="tip-icon">₱</span>
+                    <p>Your biggest single expense this month was <strong>
+                        ₱{Math.max(...thisMonthTransactions
+                            .filter(t => t.type === 'expense')
+                            .map(t => Number(t.amount))).toLocaleString()}
+                    </strong>.</p>
+                </div>
+            )}
+
+            {/* over budget warning */}
+            {totalExpenses > totalIncome && totalIncome > 0 && (
+                <div className="insight-tip tip-danger">
+                    <span className="tip-icon">!</span>
+                    <p>You're spending more than you earn this month. You're over by ₱{(totalExpenses - totalIncome).toLocaleString()}.</p>
+                </div>
+            )}
+
+            {/* no transactions yet */}
+            {thisMonthTransactions.length === 0 && (
+                <div className="insight-tip tip-info">
+                    <span className="tip-icon">i</span>
+                    <p>No transactions this month yet. Add some to see your insights!</p>
+                </div>
+            )}
+        </div>
+
+    </div>
+</div>
 
             </div>
         </div>

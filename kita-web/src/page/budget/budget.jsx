@@ -9,6 +9,8 @@ function Budget() {
     const [budgets, setBudgets] = useState([])
     const [transactions, setTransactions] = useState([])
     const userFullName = localStorage.getItem('userFullName') || 'User'
+    const [editingId, setEditingId] = useState(null)
+    const [newLimit, setNewLimit] = useState('')
 
     const now = new Date()
     const month = now.getMonth() + 1
@@ -45,10 +47,23 @@ function Budget() {
     }
 
     const handleDeleteBudget = (id) => {
-    axios.delete(`http://localhost:3001/api/budget/delete/${id}`)
-    .then(() => fetchBudgets())
-    .catch(err => console.log(err))
+        const confirmed = window.confirm("Are you sure you want to delete this budget?")
+        if (!confirmed) return
+
+        axios.delete(`http://localhost:3001/api/budget/delete/${id}`)
+        .then(() => fetchBudgets())
+        .catch(err => console.log(err))
     }
+    
+    const handleEdit = (id) => {
+        axios.put(`http://localhost:3001/api/budget/edit/${id}`, { budgetLimit: newLimit })
+        .then(() => {
+            fetchBudgets()
+            setEditingId(null)
+            setNewLimit('')
+        })
+        .catch(err => console.log(err))
+    }    
 
     return (
         <div className="budget-page">
@@ -94,9 +109,49 @@ function Budget() {
                                             </span>
                                             {' '} / ₱{budget.budgetLimit.toLocaleString()}
                                         </p>
-                                        <button className="delete-btn" onClick={() => handleDeleteBudget(budget._id)}>✕</button>
+                                        <button 
+                                            className="edit-btn" 
+                                            onClick={() => {
+                                                setEditingId(budget._id)
+                                                setNewLimit(budget.budgetLimit)
+                                            }}
+                                        >
+                                            ✎
+                                        </button>
+                                        <button 
+                                            className="delete-btn" 
+                                            onClick={() => handleDeleteBudget(budget._id)}
+                                        >
+                                            ✕
+                                        </button>
                                     </div>
                                 </div>
+
+                                {/* EDIT INPUT - only shows when editing */}
+                                {editingId === budget._id && (
+                                    <div className="edit-limit">
+                                        <input
+                                            type="number"
+                                            value={newLimit}
+                                            onChange={(e) => setNewLimit(e.target.value)}
+                                            placeholder="New budget limit"
+                                        />
+                                        <div className="edit-buttons">
+                                            <button 
+                                                className="edit-save-btn"
+                                                onClick={() => handleEdit(budget._id)}
+                                            >
+                                                Save
+                                            </button>
+                                            <button 
+                                                className="edit-cancel-btn"
+                                                onClick={() => setEditingId(null)}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
 
                                 <div className="progress-bar-container">
                                     <div

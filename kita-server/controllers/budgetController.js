@@ -24,4 +24,13 @@ const deleteBudget = (req, res) => {
     .catch(err => res.json(err))
 }
 
-module.exports = { addBudget, getBudgets, deleteBudget }
+const editBudget = (req, res) => {
+    const { id } = req.params
+    const { budgetLimit } = req.body
+
+    BudgetModel.findByIdAndUpdate(id, { budgetLimit }, { new: true })
+    .then(budget => res.json(budget))
+    .catch(err => res.json(err))
+}
+
+module.exports = { addBudget, getBudgets, deleteBudget, editBudget }

@@ -29,6 +29,9 @@ function Transaction() {
     })
 
     const handleDelete = (id) => {
+        const confirmed = window.confirm("Are you sure you want to delete this transaction?")
+        if (!confirmed) return
+
         axios.delete(`http://localhost:3001/api/delete/${id}`)
         .then(() => {
             fetchTransactions()
