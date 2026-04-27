@@ -64,7 +64,18 @@
     padding-right: 20px;
 }
 
-.delete-btn {
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.transaction-inputs:hover .action-buttons {
+    opacity: 1;
+}
+
+.edit-btn, .delete-btn {
     background: transparent;
     border: 1px solid var(--text3);
     color: var(--text3);
@@ -73,6 +84,14 @@
     height: 25px;
     cursor: pointer;
     font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-btn:hover {
+    border: 1px solid var(--accent);
+    color: var(--accent);
 }
 
 .delete-btn:hover {

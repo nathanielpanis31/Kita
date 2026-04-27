@@ -109,21 +109,23 @@ function Budget() {
                                             </span>
                                             {' '} / ₱{budget.budgetLimit.toLocaleString()}
                                         </p>
-                                        <button 
-                                            className="edit-btn" 
-                                            onClick={() => {
-                                                setEditingId(budget._id)
-                                                setNewLimit(budget.budgetLimit)
-                                            }}
-                                        >
-                                            ✎
-                                        </button>
-                                        <button 
-                                            className="delete-btn" 
-                                            onClick={() => handleDeleteBudget(budget._id)}
-                                        >
-                                            ✕
-                                        </button>
+                                        <div className="budget-actions">
+                                            <button 
+                                                className="edit-btn" 
+                                                onClick={() => {
+                                                    setEditingId(budget._id)
+                                                    setNewLimit(budget.budgetLimit)
+                                                }}
+                                            >
+                                                ✎
+                                            </button>
+                                            <button 
+                                                className="delete-btn" 
+                                                onClick={() => handleDeleteBudget(budget._id)}
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 

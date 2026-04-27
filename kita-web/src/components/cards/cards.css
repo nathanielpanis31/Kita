@@ -7,6 +7,14 @@
   background-color: var(--bg2);
   border-radius: 15px;
   font-family: 'Syne', sans-serif;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background-color: var(--bg3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card h3 {

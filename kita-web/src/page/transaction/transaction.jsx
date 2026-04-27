@@ -9,6 +9,7 @@ function Transaction() {
     const [showModal, setShowModal] = useState(false)
     const [transactions, setTransactions] = useState([])
     const [filter, setFilter] = useState('all')
+    const [transactionToEdit, setTransactionToEdit] = useState(null)
     const userFullName = localStorage.getItem('userFullName') || 'User'
 
     const fetchTransactions = () => {
@@ -39,13 +40,24 @@ function Transaction() {
         .catch(err => console.log(err))
     }
 
+    const handleEdit = (transaction) => {
+        setTransactionToEdit(transaction)
+        setShowModal(true)
+    }
+
+    const closeSubModal = () => {
+        setShowModal(false)
+        setTransactionToEdit(null)
+    }
+
     return (
         <div className="transaction-page">
 
             {showModal && (
                 <TransactionModal
-                    onClose={() => setShowModal(false)}
+                    onClose={closeSubModal}
                     onTransactionAdded={fetchTransactions}
+                    transactionToEdit={transactionToEdit}
                 />
             )}
 
@@ -80,7 +92,10 @@ function Transaction() {
                             <p className="amount" style={{ color: transaction.type === 'income' ? 'var(--green)' : 'var(--red)' }}>
                                 {transaction.type === 'income' ? '+' : '-'}₱{transaction.amount}
                             </p>
-                            <button className="delete-btn" onClick={() => handleDelete(transaction._id)}>✕</button>
+                            <div className="action-buttons">
+                                <button className="edit-btn" onClick={() => handleEdit(transaction)}>✎</button>
+                                <button className="delete-btn" onClick={() => handleDelete(transaction._id)}>✕</button>
+                            </div>
                         </div>
                     </div>
                 </div>
