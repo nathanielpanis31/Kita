@@ -1,6 +1,6 @@
 import "./BudgetModal.css"
 import { useState } from "react"
-import axios from "axios"
+import api from '../../api/axios' 
 
 function BudgetModal({ onClose, onBudgetAdded }) {
 
@@ -13,7 +13,7 @@ function BudgetModal({ onClose, onBudgetAdded }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/api/budget/add', {
+        api.post('/budget/add', {
             category,
             budgetLimit,
             month,

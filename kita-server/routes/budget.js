@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const verifyToken = require('../middleware/verifyToken')
 
 const {addBudget, getBudgets, deleteBudget, editBudget} = require ('../controllers/budgetController')
 
-router.post('/add', addBudget)
-router.get('/get', getBudgets)
-router.delete('/delete/:id', deleteBudget)
-router.put('/edit/:id', editBudget)
+router.post('/add', verifyToken, addBudget)
+router.get('/get', verifyToken, getBudgets)
+router.delete('/delete/:id', verifyToken, deleteBudget)
+router.put('/edit/:id', verifyToken, editBudget)
 
 module.exports = router

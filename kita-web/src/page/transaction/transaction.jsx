@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
 import Button from "../../components/buttons/button.jsx"
 import TransactionModal from "../../components/modal/TransactionModal.jsx"
 import "./transaction.css"
+import api from '../../api/axios'//this is axion with api
 
 
 function Transaction() {
@@ -12,7 +12,7 @@ function Transaction() {
     const userFullName = localStorage.getItem('userFullName') || 'User'
 
     const fetchTransactions = () => {
-        axios.get('http://localhost:3001/api/get')
+        api.get('/get')
         .then(result => {
             setTransactions(result.data)
         })
@@ -32,7 +32,7 @@ function Transaction() {
         const confirmed = window.confirm("Are you sure you want to delete this transaction?")
         if (!confirmed) return
 
-        axios.delete(`http://localhost:3001/api/delete/${id}`)
+        api.delete(`/delete/${id}`)
         .then(() => {
             fetchTransactions()
         })

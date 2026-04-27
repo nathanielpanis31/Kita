@@ -1,17 +1,18 @@
 const UserModel = require('../models/user')
-const bcrypt = require('bcrypt')        // ← import bcrypt
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const registerUser = (req, res) => {
     const { fullName, userName, registerPassword } = req.body
 
-    // bcrypt.hash() scrambles the password
-    // the 10 means "how hard to scramble" — 10 is the standard
     bcrypt.hash(registerPassword, 10)
     .then(hashedPassword => {
-        // now we save the SCRAMBLED version, not the real password
         return UserModel.create({ fullName, userName, password: hashedPassword })
     })
-    .then(user => res.json({ message: "Success", user: { fullName: user.fullName, userName: user.userName } }))
+    .then(user => res.json({ 
+        message: "Success", 
+        user: { fullName: user.fullName, userName: user.userName } 
+    }))
     .catch(err => res.json(err))
 }
 
@@ -22,15 +23,25 @@ const loginUser = (req, res) => {
     .then(user => {
         if (!user) return res.json("User does not exist")
 
-        // bcrypt.compare() checks if the typed password matches the scrambled one
-        // it never "unscrambles" — it just checks if they match
         return bcrypt.compare(registerPassword, user.password)
         .then(isMatch => {
-            if (isMatch) {
-                res.json({ message: "Success", user: { fullName: user.fullName, userName: user.userName } })
-            } else {
-                res.json("Incorrect password")
-            }
+            if (!isMatch) return res.json("Incorrect password")
+
+            const token = jwt.sign(
+                { userId: user._id },       // ← fixed: lowercase userId
+                process.env.JWT_SECRET,
+                { expiresIn: '30d' }
+            )
+
+            // only ONE res.json() here!
+            res.json({
+                message: "Success",
+                token: token,
+                user: {
+                    fullName: user.fullName,
+                    userName: user.userName
+                }
+            })
         })
     })
     .catch(err => res.json(err))

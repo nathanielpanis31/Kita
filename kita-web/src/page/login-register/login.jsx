@@ -15,6 +15,7 @@ function Login() {
             .then(result => {
                 if (result.data.message === "Success") {
                     localStorage.setItem('userFullName', result.data.user.fullName)
+                    localStorage.setItem('token', result.data.token)
                     navigate('/dashboard')
                 }
             })

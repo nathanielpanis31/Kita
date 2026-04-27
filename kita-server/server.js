@@ -14,8 +14,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// database connection
-mongoose.connect("mongodb://127.0.0.1:27017/user");
+// mongoose.connect("mongodb://127.0.0.1:27017/user"); (this is the database URL)
+mongoose.connect(process.env.MONGO_URL);//instead of using database URL directly just like on the above we read it from the .env file
 
 // routes
 app.use('/api', authRoutes) //this is the variables at the top
@@ -23,6 +23,6 @@ app.use('/api', transactionRoutes) //this is the variables at the top
 app.use('/api/budget', budgetRoutes)//we add /budget here so that the api called will not have conflict with the transaction routhes add transaction should have it too but since its already connected with the api we wont change it but we should add it on the future api's
 
 
-app.listen(3001, () => {
-  console.log("server is running")
+app.listen(process.env.PORT, () => {
+  console.log(`server is running on port ${process.env.PORT}`)
 })

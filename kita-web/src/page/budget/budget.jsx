@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
 import Button from "../../components/buttons/button.jsx"
 import BudgetModal from "../../components/modal/BudgetModal.jsx"
 import "./budget.css"
+import api from '../../api/axios'
 
 function Budget() {
     const [showModal, setShowModal] = useState(false)
@@ -17,13 +17,13 @@ function Budget() {
     const year = now.getFullYear()
 
     const fetchBudgets = () => {
-        axios.get(`http://localhost:3001/api/budget/get?month=${month}&year=${year}`)
+        api.get(`/budget/get?month=${month}&year=${year}`)
         .then(result => setBudgets(result.data))
         .catch(err => console.log(err))
     }
 
     const fetchTransactions = () => {
-        axios.get('http://localhost:3001/api/get')
+        api.get('/get')
         .then(result => setTransactions(result.data))
         .catch(err => console.log(err))
     }
@@ -50,13 +50,13 @@ function Budget() {
         const confirmed = window.confirm("Are you sure you want to delete this budget?")
         if (!confirmed) return
 
-        axios.delete(`http://localhost:3001/api/budget/delete/${id}`)
+        api.delete(`/budget/delete/${id}`)
         .then(() => fetchBudgets())
         .catch(err => console.log(err))
     }
     
     const handleEdit = (id) => {
-        axios.put(`http://localhost:3001/api/budget/edit/${id}`, { budgetLimit: newLimit })
+        api.put(`/budget/edit/${id}`, { budgetLimit: newLimit })
         .then(() => {
             fetchBudgets()
             setEditingId(null)

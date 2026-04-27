@@ -2,16 +2,18 @@ const BudgetModel = require('../models/budget')
 
 const addBudget = (req, res) => {
     const { category, budgetLimit, month, year } = req.body
+    const userId = req.userId
 
-    BudgetModel.create({ category, budgetLimit, month, year })
+    BudgetModel.create({ userId, category, budgetLimit, month, year })
     .then(budget => res.json(budget))
     .catch(err => res.json(err))
 }
 
 const getBudgets = (req, res) => {
     const { month, year } = req.query
+    const userId = req.userId
 
-    BudgetModel.find({ month: month, year: year })
+    BudgetModel.find({ userId: userId, month: month, year: year })
     .then(budgets => res.json(budgets))
     .catch(err => res.json(err))
 }

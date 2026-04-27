@@ -1,6 +1,6 @@
 import "./TransactionModal.css"
 import { useState } from "react"
-import axios from "axios"
+import api from '../../api/axios' 
 
 
 function TransactionModal({ onClose, onTransactionAdded }) {
@@ -13,7 +13,7 @@ function TransactionModal({ onClose, onTransactionAdded }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/api/add', { label, amount, type, category, date })
+        api.post('/add', { label, amount, type, category, date })
         .then(result => {
             console.log(result)
             onTransactionAdded()

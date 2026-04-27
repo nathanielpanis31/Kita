@@ -1,11 +1,11 @@
 import "./dashboard.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Button from "../../components/buttons/button.jsx";
 import Card from "../../components/cards/card.jsx";
 import TransactionModal from "../../components/modal/TransactionModal.jsx";
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
+import api from '../../api/axios'
 
 // Generate dynamic colors based on index to ensure we never run out
 const getDynamicColor = (index) => {
@@ -37,7 +37,7 @@ function Dashboard() {
     }
 
     const fetchTransactions = () => {
-        axios.get('http://localhost:3001/api/get')
+        api.get('/get')
         .then(result => {
             setTransactions(result.data)
         })

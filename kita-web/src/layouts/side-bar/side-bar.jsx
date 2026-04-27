@@ -7,9 +7,11 @@ function SideBar() {
   const formattedDate = now.toLocaleDateString("en-US", options);
   const navigate = useNavigate()
 
-  const handleLogout = () => {
+const handleLogout = () => {
+    localStorage.removeItem('token')        // ← remove token
+    localStorage.removeItem('userFullName') // ← remove name
     navigate('/login')
-  }
+}
 
   return (
     <div className="sideBar">

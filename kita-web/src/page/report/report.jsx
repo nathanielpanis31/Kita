@@ -1,10 +1,10 @@
 import "./report.css"
 import { useState, useEffect } from "react"
-import axios from "axios"
 import {
     BarChart, Bar, XAxis, YAxis, Tooltip,
     Legend, ResponsiveContainer, Cell, PieChart, Pie
 } from 'recharts'
+import api from '../../api/axios'
 
 const COLORS = ['#7c6bff', '#2de08a', '#ff5f7e', '#ffb347', '#2dd4bf', '#f472b6']
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -15,7 +15,7 @@ function Report() {
     const userFullName = localStorage.getItem('userFullName') || 'User'
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/get')
+        api.get('/get')
         .then(result => setTransactions(result.data))
         .catch(err => console.log(err))
     }, [])
