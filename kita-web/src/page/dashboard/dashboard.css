@@ -47,6 +47,13 @@
     flex-direction: column;
     background-color: var(--bg2);
     border-radius: 15px;;
+    transition: all 0.3s ease;
+}
+
+.transaction:hover {
+    transform: translateY(-5px);
+    background-color: var(--bg3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .recentTransaction-header{
@@ -75,10 +82,11 @@ hr{
     margin: 15px 30px;
     margin-bottom: 10px;
     border-radius: 10px;
+    transition: background-color 0.2s ease;
 }
 
 .transaction-inputs:hover{
-    background-color: var(--bg3);
+    background-color: var(--bg4);
 }
 
 .label-amount {
@@ -115,6 +123,13 @@ hr{
     grid-row: 2/4;
     background-color: var(--bg2);
     border-radius: 15px;;
+    transition: all 0.3s ease;
+}
+
+.spending-category:hover {
+    transform: translateY(-5px);
+    background-color: var(--bg3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .spending-category h2{   
@@ -128,6 +143,13 @@ hr{
     grid-row: 4/6;
     background-color: var(--bg2);
     border-radius: 15px;;
+    transition: all 0.3s ease;
+}
+
+.spending-insights:hover {
+    transform: translateY(-5px);
+    background-color: var(--bg3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .spending-insights h2{   
