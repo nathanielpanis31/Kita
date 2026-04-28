@@ -7,6 +7,7 @@ require("dotenv").config();
 const authRoutes = require('./routes/auth') //this is the directory of folder files
 const transactionRoutes = require('./routes/transaction') //this is the directory of folder files
 const budgetRoutes = require('./routes/budget')//this is the directory of folder files
+const goalRoutes = require('./routes/goal')
 
 const app = express();
 
@@ -21,6 +22,7 @@ mongoose.connect(process.env.MONGO_URL);//instead of using database URL directly
 app.use('/api', authRoutes) //this is the variables at the top
 app.use('/api', transactionRoutes) //this is the variables at the top
 app.use('/api/budget', budgetRoutes)//we add /budget here so that the api called will not have conflict with the transaction routhes add transaction should have it too but since its already connected with the api we wont change it but we should add it on the future api's
+app.use('/api/goal', goalRoutes)
 
 
 app.listen(process.env.PORT, () => {

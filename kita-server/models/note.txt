@@ -1,0 +1,2 @@
+this folder is where youre gonna create how your database will be stored and whats inside it cause on MongoDB its not like sql where you will set the strict structure or blue print
+dimo na need gumawa ng tables and columns parang sa dataverse no relationship needed dito

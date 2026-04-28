@@ -6,6 +6,7 @@ import Dashboard from "./page/dashboard/dashboard.jsx"
 import Transaction from "./page/transaction/transaction.jsx"
 import Budget from "./page/budget/budget.jsx"
 import Reports from "./page/report/report.jsx"
+import Goals from "./page/goals/goals.jsx" 
 import ProtectedRoute from './components/protectedroute/ProtectedRoute.jsx'  // ← import it
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                                     <Route path="/transaction" element={<Transaction />} />
                                     <Route path="/budget" element={<Budget />} />
                                     <Route path="/reports" element={<Reports />} />
+                                    <Route path="/goals" element={<Goals />} />
                                 </Routes>
                             </div>
                         </main>

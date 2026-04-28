@@ -1,0 +1,2 @@
+in this folder where all file for the actual backend of the system will be stored
+like kung ano yung mangyayari pag pinindot mo yung button or dun sa mga inpuuts

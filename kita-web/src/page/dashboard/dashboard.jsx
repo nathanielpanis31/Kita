@@ -55,7 +55,19 @@ function Dashboard() {
     })
 
     // total balance - change to use selected month only
-    const totalBalance = thisMonthTransactions.reduce((total, transaction) => {
+const totalBalance = transactions
+    .filter(transaction => {
+        const transactionDate = new Date(transaction.date)
+        // include all transactions UP TO selected month
+        return (
+            transactionDate.getFullYear() < selectedYear ||
+            (
+                transactionDate.getFullYear() === selectedYear &&
+                transactionDate.getMonth() <= selectedMonth
+            )
+        )
+    })
+    .reduce((total, transaction) => {
         if (transaction.type === 'income') {
             return total + Number(transaction.amount)
         } else {
@@ -133,7 +145,7 @@ function Dashboard() {
 
                 <Card title="TOTAL BALANCE">
                     <p className="balance-amount">₱{totalBalance.toLocaleString()}</p>
-                    <p className="caption">All time net</p>
+                    <p className="caption">Up to {new Date(selectedYear, selectedMonth).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
                 </Card>
 
                 <Card title={`INCOME - ${monthOptions[0] ? new Date(selectedYear, selectedMonth).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : ''}`}>

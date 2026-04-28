@@ -23,6 +23,7 @@ const handleLogout = () => {
         <li><Link to="/dashboard">Dashboard</Link></li>
         <li><Link to="/transaction">Transaction</Link></li>
         <li><Link to="/budget">Budget</Link></li>
+        <li><Link to="/goals">Goals</Link></li> 
         <li><Link to="/reports">Reports</Link></li>
       </ul>
 
