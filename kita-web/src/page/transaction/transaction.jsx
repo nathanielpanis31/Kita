@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import Button from "../../components/buttons/button.jsx"
 import TransactionModal from "../../components/modal/TransactionModal.jsx"
+import ConfirmModal from "../../components/modal/ConfirmModal.jsx"
 import "./transaction.css"
 import api from '../../api/axios'
 import { useDate } from "../../context/DateContext"
@@ -8,6 +9,8 @@ import { useDate } from "../../context/DateContext"
 function Transaction() {
     const { selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, monthOptions } = useDate()
     const [showModal, setShowModal] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
+    const [idToDelete, setIdToDelete] = useState(null)
     const [transactions, setTransactions] = useState([])
     const [filter, setFilter] = useState('all')
     const [transactionToEdit, setTransactionToEdit] = useState(null)
@@ -35,13 +38,17 @@ function Transaction() {
         return transaction.type === filter
     })
 
-    const handleDelete = (id) => {
-        const confirmed = window.confirm("Are you sure you want to delete this transaction?")
-        if (!confirmed) return
+    const handleDeleteClick = (id) => {
+        setIdToDelete(id)
+        setShowConfirm(true)
+    }
 
-        api.delete(`/delete/${id}`)
+    const confirmDelete = () => {
+        api.delete(`/delete/${idToDelete}`)
         .then(() => {
             fetchTransactions()
+            setShowConfirm(false)
+            setIdToDelete(null)
         })
         .catch(err => console.log(err))
     }
@@ -64,6 +71,16 @@ function Transaction() {
                     onClose={closeSubModal}
                     onTransactionAdded={fetchTransactions}
                     transactionToEdit={transactionToEdit}
+                />
+            )}
+
+            {showConfirm && (
+                <ConfirmModal 
+                    title="Delete Transaction"
+                    message="Are you sure you want to delete this transaction? This action cannot be undone."
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowConfirm(false)}
+                    confirmText="Delete"
                 />
             )}
 
@@ -119,7 +136,7 @@ function Transaction() {
                                 </p>
                                 <div className="action-buttons">
                                     <button className="edit-btn" onClick={() => handleEdit(transaction)}>✎</button>
-                                    <button className="delete-btn" onClick={() => handleDelete(transaction._id)}>✕</button>
+                                    <button className="delete-btn" onClick={() => handleDeleteClick(transaction._id)}>✕</button>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import Button from "../../components/buttons/button.jsx"
 import BudgetModal from "../../components/modal/BudgetModal.jsx"
+import ConfirmModal from "../../components/modal/ConfirmModal.jsx"
 import "./budget.css"
 import api from '../../api/axios'
 import { useDate } from "../../context/DateContext"
@@ -8,6 +9,8 @@ import { useDate } from "../../context/DateContext"
 function Budget() {
     const { selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, monthOptions } = useDate()
     const [showModal, setShowModal] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
+    const [idToDelete, setIdToDelete] = useState(null)
     const [budgets, setBudgets] = useState([])
     const [transactions, setTransactions] = useState([])
     const userFullName = localStorage.getItem('userFullName') || 'User'
@@ -47,23 +50,37 @@ function Budget() {
             .reduce((total, t) => total + Number(t.amount), 0)
     }
 
-    const handleDeleteBudget = (id) => {
-        const confirmed = window.confirm("Are you sure you want to delete this budget?")
-        if (!confirmed) return
+    const handleDeleteClick = (id) => {
+        setIdToDelete(id)
+        setShowConfirm(true)
+    }
 
-        api.delete(`/budget/delete/${id}`)
-        .then(() => fetchBudgets())
+    const confirmDelete = () => {
+        api.delete(`/budget/delete/${idToDelete}`)
+        .then(() => {
+            fetchBudgets()
+            setShowConfirm(false)
+            setIdToDelete(null)
+        })
         .catch(err => console.log(err))
     }
     
     const handleEdit = (id) => {
-        api.put(`/budget/edit/${id}`, { budgetLimit: newLimit })
+        if (!newLimit || Number(newLimit) <= 0) {
+            alert("Budget Limit must be greater than zero");
+            return;
+        }
+
+        api.put(`/budget/edit/${id}`, { budgetLimit: Number(newLimit) })
         .then(() => {
             fetchBudgets()
             setEditingId(null)
             setNewLimit('')
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.error(err);
+            alert(err.response?.data?.error || "Failed to update budget");
+        })
     }    
 
     return (
@@ -73,6 +90,16 @@ function Budget() {
                 <BudgetModal
                     onClose={() => setShowModal(false)}
                     onBudgetAdded={fetchBudgets}
+                />
+            )}
+
+            {showConfirm && (
+                <ConfirmModal 
+                    title="Delete Budget"
+                    message="Are you sure you want to delete this budget category?"
+                    onConfirm={confirmDelete}
+                    onCancel={() => setShowConfirm(false)}
+                    confirmText="Delete"
                 />
             )}
 
@@ -141,13 +168,13 @@ function Budget() {
                                             </button>
                                             <button 
                                                 className="delete-btn" 
-                                                onClick={() => handleDeleteBudget(budget._id)}
+                                                onClick={() => handleDeleteClick(budget._id)}
                                             >
                                                 ✕
                                             </button>
                                         </div>
-                                    </div>
-                                </div>
+                                        </div>
+                                        </div>
 
                                 {/* EDIT INPUT - only shows when editing */}
                                 {editingId === budget._id && (

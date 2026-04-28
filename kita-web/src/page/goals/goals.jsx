@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react"
 import Button from "../../components/buttons/button.jsx"
 import GoalModal from "../../components/modal/GoalModal.jsx"
+import ConfirmModal from "../../components/modal/ConfirmModal.jsx"
 import "./goals.css"
 import api from '../../api/axios'
 
 function Goals() {
     const [showModal, setShowModal] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
+    const [confirmConfig, setConfirmConfig] = useState({ type: 'danger', title: '', message: '', action: null })
     const [goals, setGoals] = useState([])
     const [transactions, setTransactions] = useState([])
     const userFullName = localStorage.getItem('userFullName') || 'User'
@@ -36,26 +39,41 @@ function Goals() {
         }
     }, 0)
 
-    const handleComplete = (id) => {
-        const confirmed = window.confirm("Complete this goal? The amount will be deducted from your balance.")
-        if (!confirmed) return
-
-        // PUT /api/goal/complete/:id
-        api.put(`/goal/complete/${id}`)
-        .then(() => {
-            fetchGoals()        // refresh goals
-            fetchTransactions() // refresh balance
+    const handleCompleteClick = (id) => {
+        setConfirmConfig({
+            type: 'primary',
+            title: 'Complete Goal',
+            message: 'Are you sure you want to complete this goal? The target amount will be deducted from your total balance.',
+            confirmText: 'Complete',
+            onConfirm: () => {
+                api.put(`/goal/complete/${id}`)
+                .then(() => {
+                    fetchGoals()
+                    fetchTransactions()
+                    setShowConfirm(false)
+                })
+                .catch(err => console.log(err))
+            }
         })
-        .catch(err => console.log(err))
+        setShowConfirm(true)
     }
 
-    const handleDelete = (id) => {
-        const confirmed = window.confirm("Delete this goal?")
-        if (!confirmed) return
-
-        api.delete(`/goal/delete/${id}`)
-        .then(() => fetchGoals())
-        .catch(err => console.log(err))
+    const handleDeleteClick = (id) => {
+        setConfirmConfig({
+            type: 'danger',
+            title: 'Delete Goal',
+            message: 'Are you sure you want to delete this goal? This action cannot be undone.',
+            confirmText: 'Delete',
+            onConfirm: () => {
+                api.delete(`/goal/delete/${id}`)
+                .then(() => {
+                    fetchGoals()
+                    setShowConfirm(false)
+                })
+                .catch(err => console.log(err))
+            }
+        })
+        setShowConfirm(true)
     }
 
     const getDaysLeft = (deadline) => {
@@ -73,6 +91,17 @@ function Goals() {
                 <GoalModal
                     onClose={() => setShowModal(false)}
                     onGoalAdded={fetchGoals}
+                />
+            )}
+
+            {showConfirm && (
+                <ConfirmModal 
+                    title={confirmConfig.title}
+                    message={confirmConfig.message}
+                    onConfirm={confirmConfig.onConfirm}
+                    onCancel={() => setShowConfirm(false)}
+                    confirmText={confirmConfig.confirmText}
+                    type={confirmConfig.type}
                 />
             )}
 
@@ -133,7 +162,7 @@ function Goals() {
                                     </div>
                                     <button
                                         className="delete-btn"
-                                        onClick={() => handleDelete(goal._id)}
+                                        onClick={() => handleDeleteClick(goal._id)}
                                     >
                                         ✕
                                     </button>
@@ -181,7 +210,7 @@ function Goals() {
                                 {!isCompleted && (
                                     <button
                                         className={`complete-btn ${canAfford ? 'complete-btn-active' : 'complete-btn-disabled'}`}
-                                        onClick={() => canAfford && handleComplete(goal._id)}
+                                        onClick={() => canAfford && handleCompleteClick(goal._id)}
                                         disabled={!canAfford}
                                     >
                                         {canAfford 

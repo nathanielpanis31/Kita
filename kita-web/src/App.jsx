@@ -9,12 +9,14 @@ import Reports from "./page/report/report.jsx"
 import Goals from "./page/goals/goals.jsx" 
 import ProtectedRoute from './components/protectedroute/ProtectedRoute.jsx'
 import { DateProvider } from './context/DateContext.jsx'
+import { ToastProvider } from './components/toast/ToastContext.jsx'
 
 function App() {
     return (
-        <DateProvider>
-            <BrowserRouter>
-                <Routes>
+        <ToastProvider>
+            <DateProvider>
+                <BrowserRouter>
+                    <Routes>
                     {/* Public routes - no sidebar */}
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
@@ -40,6 +42,7 @@ function App() {
                 </Routes>
             </BrowserRouter>
         </DateProvider>
+    </ToastProvider>
     )
 }
 

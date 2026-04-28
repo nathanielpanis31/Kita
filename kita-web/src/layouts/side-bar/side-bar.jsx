@@ -1,20 +1,33 @@
 import "./side-bar.css"
-import { Link, useNavigate } from 'react-router-dom'  // ← remove Outlet, add useNavigate
+import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import ConfirmModal from "../../components/modal/ConfirmModal.jsx"
 
 function SideBar() {
   const now = new Date();
   const options = { month: "long", year: "numeric" };
   const formattedDate = now.toLocaleDateString("en-US", options);
   const navigate = useNavigate()
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
 const handleLogout = () => {
-    localStorage.removeItem('token')        // ← remove token
-    localStorage.removeItem('userFullName') // ← remove name
+    localStorage.removeItem('token')
+    localStorage.removeItem('userFullName')
     navigate('/login')
 }
 
   return (
     <div className="sideBar">
+      {showLogoutConfirm && (
+        <ConfirmModal 
+          title="Logout"
+          message="Are you sure you want to log out?"
+          confirmText="Logout"
+          onConfirm={handleLogout}
+          onCancel={() => setShowLogoutConfirm(false)}
+          type="danger"
+        />
+      )}
       <div className="sideBarHeadings">  
         <h1>kita.</h1>
       </div>
@@ -33,7 +46,7 @@ const handleLogout = () => {
           <p>{formattedDate}</p>
           <p>Current period</p>
         </div>
-        <button onClick={handleLogout} className="logout-btn">Logout</button>  {/* ← add this */}
+        <button onClick={() => setShowLogoutConfirm(true)} className="logout-btn">Logout</button>
       </div>
     </div>
   )
