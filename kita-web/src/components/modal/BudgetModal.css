@@ -56,6 +56,24 @@
     border: 1px solid var(--accent);
 }
 
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.checkbox-group input {
+    width: 20px !important;
+    height: 20px !important;
+    margin-top: 0 !important;
+}
+
+.checkbox-group label {
+    margin: 0;
+    cursor: pointer;
+}
+
 .budget-modal-buttons {
     display: flex;
     gap: 10px;

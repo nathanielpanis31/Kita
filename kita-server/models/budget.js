@@ -6,6 +6,7 @@ const BudgetSchema = new mongoose.Schema({
     budgetLimit: Number,
     month: Number,
     year: Number,
+    isPermanent: { type: Boolean, default: false }
 }, { timestamps: true })
 
 const BudgetModel = mongoose.model("budgets", BudgetSchema)

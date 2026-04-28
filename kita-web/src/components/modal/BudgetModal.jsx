@@ -1,15 +1,16 @@
 import "./BudgetModal.css"
 import { useState } from "react"
 import api from '../../api/axios' 
+import { useDate } from "../../context/DateContext"
 
 function BudgetModal({ onClose, onBudgetAdded }) {
-
+    const { selectedMonth, selectedYear } = useDate()
     const [category, setCategory] = useState('')
     const [budgetLimit, setBudgetLimit] = useState('')
+    const [isPermanent, setIsPermanent] = useState(false)
 
-    const now = new Date()
-    const month = now.getMonth() + 1
-    const year = now.getFullYear()
+    const month = selectedMonth + 1
+    const year = selectedYear
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -17,7 +18,8 @@ function BudgetModal({ onClose, onBudgetAdded }) {
             category,
             budgetLimit,
             month,
-            year
+            year,
+            isPermanent
         })
         .then(result => {
             console.log(result)
@@ -35,21 +37,36 @@ function BudgetModal({ onClose, onBudgetAdded }) {
                 <form onSubmit={handleSubmit}>
                 <div className="budget-modal-inputs">
 
-        <input
-            type="text"
-            placeholder="e.g. Food, Transport, Bills"
-            onChange={(e) => setCategory(e.target.value)}
-            required
-        />
+                    <div>
+                        <label>CATEGORY</label>
+                        <input
+                            type="text"
+                            placeholder="e.g. Food, Transport, Bills"
+                            onChange={(e) => setCategory(e.target.value)}
+                            required
+                        />
+                    </div>
 
                     <div>
-                        <label>BUDGET LIMIT (₱)</label><br />
+                        <label>BUDGET LIMIT (₱)</label>
                         <input
                             type="number"
                             placeholder="e.g. 3000"
                             onChange={(e) => setBudgetLimit(e.target.value)}
                             required
                         />
+                    </div>
+
+                    <div className="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="isPermanent"
+                            checked={isPermanent}
+                            onChange={(e) => setIsPermanent(e.target.checked)}
+                        />
+                        <label htmlFor="isPermanent">
+                            Permanent Budget (Shows in all months)
+                        </label>
                     </div>
 
                 </div>

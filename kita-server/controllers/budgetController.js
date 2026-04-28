@@ -1,10 +1,10 @@
 const BudgetModel = require('../models/budget')
 
 const addBudget = (req, res) => {
-    const { category, budgetLimit, month, year } = req.body
+    const { category, budgetLimit, month, year, isPermanent } = req.body
     const userId = req.userId
 
-    BudgetModel.create({ userId, category, budgetLimit, month, year })
+    BudgetModel.create({ userId, category, budgetLimit, month, year, isPermanent })
     .then(budget => res.json(budget))
     .catch(err => res.json(err))
 }
@@ -13,7 +13,14 @@ const getBudgets = (req, res) => {
     const { month, year } = req.query
     const userId = req.userId
 
-    BudgetModel.find({ userId: userId, month: month, year: year })
+    // Find budgets that are either permanent OR match the specific month and year
+    BudgetModel.find({ 
+        userId: userId,
+        $or: [
+            { isPermanent: true },
+            { month: month, year: year }
+        ]
+    })
     .then(budgets => res.json(budgets))
     .catch(err => res.json(err))
 }

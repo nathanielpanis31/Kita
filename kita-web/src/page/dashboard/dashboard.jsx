@@ -6,6 +6,7 @@ import Card from "../../components/cards/card.jsx";
 import TransactionModal from "../../components/modal/TransactionModal.jsx";
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
 import api from '../../api/axios'
+import { useDate } from "../../context/DateContext";
 
 // Generate dynamic colors based on index to ensure we never run out
 const getDynamicColor = (index) => {
@@ -15,26 +16,12 @@ const getDynamicColor = (index) => {
     return `hsl(${hue}, 70%, 65%)`;
 };
 
-const now = new Date();
-
 function Dashboard() {
     const navigate = useNavigate()
+    const { selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, monthOptions } = useDate()
     const [showModal, setShowModal] = useState(false)
     const [transactions, setTransactions] = useState([])
     const userFullName = localStorage.getItem('userFullName') || 'User'
-    const [selectedMonth, setSelectedMonth] = useState(now.getMonth())
-    const [selectedYear, setSelectedYear] = useState(now.getFullYear())
-
-    // generate last 12 months as options
-    const monthOptions = []
-    for (let i = 0; i < 12; i++) {
-        const date = new Date(now.getFullYear(), now.getMonth() - i, 1)
-        monthOptions.push({
-            label: date.toLocaleDateString("en-US", { month: "long", year: "numeric" }),
-            month: date.getMonth(),
-            year: date.getFullYear()
-        })
-    }
 
     const fetchTransactions = () => {
         api.get('/get')
@@ -126,7 +113,7 @@ const totalBalance = transactions
                         setSelectedMonth(selected.month)
                         setSelectedYear(selected.year)
                     }}
-                    defaultValue={0}
+                    value={monthOptions.findIndex(opt => opt.month === selectedMonth && opt.year === selectedYear)}
                 >
                     {monthOptions.map((option, index) => (
                         <option key={index} value={index}>

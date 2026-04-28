@@ -3,8 +3,10 @@ import Button from "../../components/buttons/button.jsx"
 import BudgetModal from "../../components/modal/BudgetModal.jsx"
 import "./budget.css"
 import api from '../../api/axios'
+import { useDate } from "../../context/DateContext"
 
 function Budget() {
+    const { selectedMonth, setSelectedMonth, selectedYear, setSelectedYear, monthOptions } = useDate()
     const [showModal, setShowModal] = useState(false)
     const [budgets, setBudgets] = useState([])
     const [transactions, setTransactions] = useState([])
@@ -12,9 +14,8 @@ function Budget() {
     const [editingId, setEditingId] = useState(null)
     const [newLimit, setNewLimit] = useState('')
 
-    const now = new Date()
-    const month = now.getMonth() + 1
-    const year = now.getFullYear()
+    const month = selectedMonth + 1
+    const year = selectedYear
 
     const fetchBudgets = () => {
         api.get(`/budget/get?month=${month}&year=${year}`)
@@ -31,19 +32,19 @@ function Budget() {
     useEffect(() => {
         fetchBudgets()
         fetchTransactions()
-    }, [])
+    }, [selectedMonth, selectedYear])
 
     // calculate how much spent per category this month
     const getSpentAmount = (category) => {
         return transactions
             .filter(t => {
                 const tDate = new Date(t.date)
-                return t.category.toLowerCase() === category.toLowerCase() &&  // add .toLowerCase()
+                return t.category.toLowerCase() === category.toLowerCase() &&
                       t.type === 'expense' &&
-                      tDate.getMonth() + 1 === month &&
-                      tDate.getFullYear() === year
+                      tDate.getMonth() === selectedMonth &&
+                      tDate.getFullYear() === selectedYear
             })
-            .reduce((total, t) => total + Number(t.amount), 0)  // add Number()
+            .reduce((total, t) => total + Number(t.amount), 0)
     }
 
     const handleDeleteBudget = (id) => {
@@ -81,6 +82,22 @@ function Budget() {
                     <p>Good Day {userFullName}!</p>
                 </div>
                 <div className="right-heading">
+                    <select
+                        className="month-select"
+                        style={{ marginRight: '10px' }}
+                        onChange={(e) => {
+                            const selected = monthOptions[e.target.value]
+                            setSelectedMonth(selected.month)
+                            setSelectedYear(selected.year)
+                        }}
+                        value={monthOptions.findIndex(opt => opt.month === selectedMonth && opt.year === selectedYear)}
+                    >
+                        {monthOptions.map((option, index) => (
+                            <option key={index} value={index}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
                     <Button className="primary" onClick={() => setShowModal(true)}>
                         + Add Budget
                     </Button>
@@ -90,7 +107,7 @@ function Budget() {
             <div className="budget-body">
                 {budgets.length === 0 ? (
                     <p style={{ padding: '30px', color: 'var(--text2)' }}>
-                        No budgets yet. Click + Add Budget to start!
+                        No budgets yet for this period. Click + Add Budget to start!
                     </p>
                 ) : (
                     budgets.map(budget => {
@@ -101,7 +118,10 @@ function Budget() {
                         return (
                             <div className="budget-card" key={budget._id}>
                                 <div className="budget-card-header">
-                                    <p className="budget-category">{budget.category}</p>
+                                    <div className="category-tag">
+                                        <p className="budget-category">{budget.category}</p>
+                                        {budget.isPermanent && <span className="recurring-badge">RECURRING</span>}
+                                    </div>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                         <p className="budget-amounts">
                                             <span style={{ color: isOverBudget ? 'var(--red)' : 'var(--text)' }}>
